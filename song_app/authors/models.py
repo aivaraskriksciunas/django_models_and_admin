@@ -1,0 +1,16 @@
+from django.db import models
+
+# Create your models here.
+class Author( models.Model ):
+    first_name = models.CharField( max_length = 80 )
+    last_name = models.CharField( max_length = 80 )
+    birth_date = models.DateField( null = True, help_text = "Gimimo data" )
+
+    # Saugoti kada buvo sukurtas ar atnaujintas
+    created_at = models.DateTimeField( auto_now_add = True )
+    updated_at = models.DateTimeField( auto_now = True )
+
+    # Kiekvieną kartą kai django bandys autorių paversti į string,
+    # bus iškviesta šita funkcija
+    def __str__( self ):
+        return f"{self.first_name} {self.last_name}"
