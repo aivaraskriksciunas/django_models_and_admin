@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block "pavadinimas" %}
+Dainos
+{% endblock %}
+
+{% block "turinys" %}
+    <h1>Dainos peržiūra</h1>
+    {{ daina.author.first_name }}
+    {{ daina.author.last_name }} -
+    {{ daina.title }}
+    ({{ daina.duration }})
+{% endblock %}
