@@ -30,4 +30,8 @@ Esate {{ page_obj.number }} iš
     <a href="?page={{ page_obj.next_page_number }}">Sekantis puslapis</a>
 {% endif %}
 
+{% for p in page_obj.paginator.page_range %}
+    <a href="?page={{ p }}">{{ p }}</a>
+{% endfor %}
+
 {% endblock %}

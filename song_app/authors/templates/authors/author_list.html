@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block "pavadinimas" %}
+    Autorių sąrašas
+{% endblock %}
+
+{% block "turinys" %}
+    Visi autoriai:
+    <ol>
+        {% for author in object_list %}
+            <li>
+                {{ author.first_name }} {{ author.last_name }}
+            </li>
+        {% endfor %}
+    </ol>
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Atgal</a>
+    {% endif %}
+    Esate {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Pirmyn</a>
+    {% endif %}
+
+{% endblock %}
