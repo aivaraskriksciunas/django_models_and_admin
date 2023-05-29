@@ -59,7 +59,14 @@ class AuthorAdmin( admin.ModelAdmin ):
     # Iš list_display, čia apsirašom laukelį kurio nebuvo modelyje
     def linksmas_laukelis( self, model ):
         # model yra Author klases objektas
-        return f":D {model.first_name}"
+        song_list = []
+        for song in model.song_set.all():
+            song_list.append( song.title )
+
+        str_song_list = ", ".join( song_list )
+
+        str_song_list = ", ".join( song.title for song in model.song_set.all() )
+        return f":D {str_song_list}"
 
 # Register your models here.
 admin.site.register( Author, AuthorAdmin )
