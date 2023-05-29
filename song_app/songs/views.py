@@ -2,6 +2,7 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import ListView
 from songs.models import Song
 from authors.models import Author
 
@@ -32,6 +33,9 @@ def show_all_songs( request ):
             'daina': pirma_daina
         }
     )
+
+class AllSongView( ListView ):
+    model = Song
 
 def create_song( request ):
 #/songs/new/?title=manodaina&duration=250
