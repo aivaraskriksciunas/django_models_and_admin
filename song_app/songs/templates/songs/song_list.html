@@ -11,12 +11,19 @@ Dainu sarasas:
         </li>
     {% endfor %}
 </ul>
-{{ page_obj.number }}
+
 <a href="https://youtube.com">Išorinis linkas</a>
 <a href="/songs/list/">Vidinis linkas</a>
 <a href="?page=1">Pirmas puslapis</a>
-<a href="?page=2">Antras puslapis</a>
+{% if page_obj.paginator.num_pages >= 2 %}
+    <a href="?page=2">Antras puslapis</a>
+{% endif %}
+<!-- Parodo kuriame lape esame -->
+Esate {{ page_obj.number }} iš
+{{ page_obj.paginator.num_pages }}
+<!-- Generuoja nuorodas į praeitus puslapius -->
 {% if page_obj.has_previous %}
+<!--  Praeito puslapio nuoroda bus tik jei praeitas puslapis egzistuoja -->
     <a href="?page={{ page_obj.previous_page_number }}">Praeitas puslapis</a>
 {% endif %}
 {% if page_obj.has_next %}
