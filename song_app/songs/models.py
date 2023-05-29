@@ -17,7 +17,7 @@ class Song( models.Model ):
     release_date = models.DateField( help_text = "Song release date" )
     author = models.ForeignKey(
         Author,
-        on_delete = models.CASCADE
+        on_delete = models.CASCADE,
     )
 
     # Saugoti kada buvo sukurtas ar atnaujintas
