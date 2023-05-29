@@ -2,4 +2,25 @@
 
 {% block "turinys" %}
 Dainu sarasas:
+<ul>
+    {% for song in object_list %}
+        <li>
+            {{ song.title }} {{ song.duration }} -
+            {{ song.author.first_name }}
+            {{ song.author.last_name }}
+        </li>
+    {% endfor %}
+</ul>
+{{ page_obj.number }}
+<a href="https://youtube.com">Išorinis linkas</a>
+<a href="/songs/list/">Vidinis linkas</a>
+<a href="?page=1">Pirmas puslapis</a>
+<a href="?page=2">Antras puslapis</a>
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Praeitas puslapis</a>
+{% endif %}
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Sekantis puslapis</a>
+{% endif %}
+
 {% endblock %}

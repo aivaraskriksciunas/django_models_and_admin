@@ -36,6 +36,7 @@ def show_all_songs( request ):
 
 class AllSongView( ListView ):
     model = Song
+    paginate_by = 1
 
 def create_song( request ):
 #/songs/new/?title=manodaina&duration=250
