@@ -42,15 +42,31 @@ class AllSongView( ListView ):
 def paieska( request ):
     search = request.GET.get( "paieska" )
     duration = request.GET.get( "duration" )
-    # None
+    # Atvejai, kai gausim klaidą:
+    # /songs/search?paieska=&duration=
+    # duration yra '' (tuščias string)
 
+    # /songs/search?paieska=
+    # duration yra None (neegzistuojanti reikšmė)
+
+    # Patikrinam, ar duration nėra None, ir ar yra sudarytas iš skaičių
     if duration is None or duration.isnumeric() == False:
         duration = 0
 
+    # Filtravimas:
+    # songs = Song.objects.filter(
+    #     title__icontains=search
+    #     duration=duration
+    # )
+    # Gautas SQL:
+    # SELECT * FROM songs WHERE title LIKE ... AND duration = ...
+
+    # Q klasė leidžia kriterijus kombinuoti su OR
     songs = Song.objects.filter(
         Q( title__icontains = search ) |
         Q( duration = duration )
     )
+    # Gautas SQL:
     # SELECT * FROM songs WHERE title LIKE ... OR duration = ...
 
     return render(
