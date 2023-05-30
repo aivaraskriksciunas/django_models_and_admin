@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView
@@ -38,6 +39,26 @@ class AllSongView( ListView ):
     model = Song
     paginate_by = 2
 
+def paieska( request ):
+    search = request.GET.get( "paieska" )
+    duration = request.GET.get( "duration" )
+    # None
+
+    if duration is None or duration.isnumeric() == False:
+        duration = 0
+
+    songs = Song.objects.filter(
+        Q( title__icontains = search ) |
+        Q( duration = duration )
+    )
+    # SELECT * FROM songs WHERE title LIKE ... OR duration = ...
+
+    return render(
+        request,
+        "songs/search_results.html",
+        { "songs": songs }
+    )
+
 def create_song( request ):
 #/songs/new/?title=manodaina&duration=250
     title = request.GET.get( 'title' )
@@ -52,3 +73,23 @@ def create_song( request ):
     song.save()
 
     return HttpResponse( f"Song created: {title}" )
+
+
+# Užduotėlė:
+# Sukurti calculator view, kuris susumuotų du skaičius, pvz:
+# http://localhost:8000/songs/calculator/?a=12&b=98
+# Paduotus parametrus a ir b sudėtų ir išvestų jų sumą
+# http://127.0.0.1:8000/songs/calculator/?a=1&b=2
+def calculator_view( request ):
+    a = request.GET.get( 'a' )
+    b = request.GET.get( 'b' )
+
+    if a == None or b == None:
+        return HttpResponse( "Pateikėte blogus duomenis" )
+
+    suma = int( a ) + int( b )
+    return render(
+        request,
+        'calculator/result.html',
+        { 'result': suma }
+    )

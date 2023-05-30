@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block "turinys" %}
+Paieška:
+
+<form action="{% url 'song_search' %}">
+<!-- /songs/?paieska=&duration= -->
+    <input type="text" name="paieska" placeholder="Paieška">
+    <input type="text" name="duration">
+    <button type="submit">Ieškoti</button>
+</form>
+
 Dainu sarasas:
 <ul>
     {% for song in object_list %}
