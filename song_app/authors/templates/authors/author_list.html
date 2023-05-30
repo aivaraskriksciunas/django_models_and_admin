@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block "turinys" %}
+    Paieška:
+    <form action="{% url 'author_search' %}">
+        <input type="text" name="first_name" placeholder="Vardas">
+        <input type="text" name="last_name" placeholder="Pavardė">
+        <input type="text" name="birth_date" placeholder="Gimimo data">
+        <button type="submit">Ieškoti</button>
+    </form>
+
     Visi autoriai:
     <ol>
         {% for author in object_list %}

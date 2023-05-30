@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView
@@ -46,3 +47,33 @@ def create_author( request ):
 class AllAuthorsListView( ListView ):
     model = Author
     paginate_by = 2
+
+
+"""
+Analogiškai kaip su songs, atlikti šiuos pakeitimus authors appse:
+Sukurti paieškos formą pagal vardą, pavardę
+Atvaizduoti paieškos rezultatus
+Papildomai pridėti paiešką pagal gimimo datą (rodyti autorius gimusius vėliau pateiktos datos)
+"""
+
+def search( request ):
+    vardas = request.GET.get( "first_name" )
+    last_name = request.GET.get( "last_name" )
+    birth_date = request.GET.get( "birth_date" )
+
+    # Tikrinimas...
+
+    authors = Author.objects.filter(
+        ( Q( first_name__icontains = vardas ) |
+          Q( last_name__icontains = last_name ) )
+        & Q( birth_date__gte = birth_date )
+    )
+    # SELECT * FROM songs WHERE
+    #   (first_name LIKE ... OR last_name LIKE ... ) AND
+    #   birth_date >= ...
+
+    return render(
+        request,
+        "authors/paieskos_rezultatai.html",
+        { "authors": authors }
+    )

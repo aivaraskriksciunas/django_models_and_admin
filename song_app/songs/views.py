@@ -42,7 +42,7 @@ class AllSongView( ListView ):
 def paieska( request ):
     search = request.GET.get( "paieska" )
     duration = request.GET.get( "duration" )
-    # Atvejai, kai gausim klaidą:
+    # Atvejai, kai gausim klaidą (iš filter funkcijos):
     # /songs/search?paieska=&duration=
     # duration yra '' (tuščias string)
 
